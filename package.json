@@ -22,7 +22,10 @@
     },
     "dependencies": {
         "botbuilder": "^4.20.0",
-        "restify": "^10.0.0"
+        "restify": "^10.0.0",
+        "@microsoft/microsoft-graph-client": "^3.0.2",
+        "@microsoft/teamsfx": "^2.0.0",
+        "isomorphic-fetch": "^3.0.0"
     },
     "devDependencies": {
         "@types/restify": "^8.5.5",
