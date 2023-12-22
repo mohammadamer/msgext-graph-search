@@ -39,7 +39,16 @@
                 {
                     "id": "People.Read",
                     "type": "Scope"
+                },
+                {
+                    "id": "Sites.Read.All",
+                    "type": "Scope"
+                },
+                {
+                    "id": "Mail.Read",
+                    "type": "Scope"
                 }
+
             ]
         }
     ],
