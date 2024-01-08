@@ -1,7 +1,7 @@
-import { TeamsActivityHandler, CardFactory, TurnContext, MessagingExtensionQuery} from "botbuilder";
-import { ResponseType, Client } from "@microsoft/microsoft-graph-client";
+import {TeamsActivityHandler, CardFactory, TurnContext, MessagingExtensionQuery} from "botbuilder";
+import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
-import { MessageExtensionTokenResponse, handleMessageExtensionQueryWithSSO, OnBehalfOfCredentialAuthConfig, OnBehalfOfUserCredential} from "@microsoft/teamsfx";
+import {MessageExtensionTokenResponse, handleMessageExtensionQueryWithSSO, OnBehalfOfCredentialAuthConfig, OnBehalfOfUserCredential} from "@microsoft/teamsfx";
 import { CommandIds } from "./enums/CommandIds";
 import { EntityType } from "./enums/EntityType";
 import "isomorphic-fetch";
@@ -28,14 +28,8 @@ export class SearchApp extends TeamsActivityHandler {
         const attachments = [];
         if (query.parameters[0] && query.parameters[0].name === "initialRun") 
         {
-          // Create an instance of the TokenCredentialAuthenticationProvider by passing the tokenCredential instance and options to the constructor
-          const authProvider = new TokenCredentialAuthenticationProvider(credential, {scopes: ["User.Read"]});
-
-          // Initialize Graph client instance with authProvider
-          const graphClient = Client.initWithMiddleware({authProvider: authProvider});
-
-          const profile = await graphClient.api("/me").get();
-          await this.getUserPhotoWithGraphClient(graphClient, attachments, profile, `/me/photo/$value`);
+          // Return empty preview Items on initial run
+          return this.GetPreviewItems(attachments);
         } 
         else 
         {
@@ -57,7 +51,8 @@ export class SearchApp extends TeamsActivityHandler {
             searchContext = `${searchContext} PromotedState:2`;
           }
 
-          const searchResponse = {requests: [{ entityTypes: [entityType], query: {queryString: searchContext},
+          const searchResponse = {requests: [{ entityTypes: [entityType],
+            query: {queryString: searchContext},
             fields: ['Id','title','name','subject','webURL','start','createdDateTime','start','end']
            }]};
           const results = await graphClient.api('/search/query').post(searchResponse);
@@ -89,6 +84,15 @@ export class SearchApp extends TeamsActivityHandler {
     );
   }
 
+  private GetPreviewItems(attachments: any[]): any {
+    return {
+      composeExtension: {
+        type: "result",
+        attachmentLayout: "list",
+        attachments: attachments,
+      }
+    };
+  }
 
   private getEntityType(commandId: string): EntityType {
     switch (commandId) {
@@ -133,28 +137,6 @@ export class SearchApp extends TeamsActivityHandler {
     } else {
         return "Unknown";
     }
-  }
-
-  private async getUserPhotoWithGraphClient(graphClient, attachments, user, apiPath)
-  {
-    let image = undefined;
-    try {
-      let photoBinary = await graphClient.api(apiPath).responseType(ResponseType.ARRAYBUFFER).get();
-      const buffer = Buffer.from(photoBinary);
-      const imageUri = "data:image/png;base64," + buffer.toString("base64");
-      image = CardFactory.images([imageUri]);
-    }
-    catch (err)
-    {
-      console.error("This user may not have personal photo!", err.message);
-    }
-
-    const thumbnailCard = CardFactory.thumbnailCard(
-      user.displayName,
-      user.mail,
-      image ? image : ""
-    );
-    attachments.push(thumbnailCard);
   }
 
   public async handleTeamsMessagingExtensionSelectItem(context: TurnContext, obj: any): Promise<any> {
