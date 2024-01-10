@@ -1,33 +1,38 @@
 # msgext-graph-search
- A Teams Message Extension that queries M365 data using Microsoft Graph Search API.
+msgext-graph-search has been built using search-based [message extension](https://docs.microsoft.com/microsoftteams/platform/messaging-extensions/what-are-messaging-extensions?tabs=nodejs) template that allows users to leverages the Graph Search API to search Microsoft 365 data and share results through the compose message area of the Microsoft Teams client. You can now build and run the this message extensions in Teams, Outlook for Windows desktop and web experiences.
 
-# Overview of Custom Search Results template
+[![msgext-graph-search app demo]](https://github.com/mohammadamer/msgext-graph-search/blob/main/docs/msgext-graph-search.mp4) 
 
-This app template is a search-based [message extension](https://docs.microsoft.com/microsoftteams/platform/messaging-extensions/what-are-messaging-extensions?tabs=nodejs) that allows users to search an external system and share results through the compose message area of the Microsoft Teams client. You can now build and run your search-based message extensions in Teams, Outlook for Windows desktop and web experiences.
+## Main functionalities
+- Login and consent in Message Extension
+- Use Microsoft Graph API to query Microsoft 365 data with SSO token in Message Extension
 
-## Get started with the template
+## Prerequisite to use this sample
+- [Node.js](https://nodejs.org/), supported versions: 16, 18
+- A Microsoft 365 account. If you do not have Microsoft 365 account, apply one from [Microsoft 365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
+- [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
 
-> **Prerequisites**
->
-> To run the template in your local dev machine, you will need:
->
-> - [Node.js](https://nodejs.org/), supported versions: 16, 18
-> - A [Microsoft 365 account for development](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts)
-> - [Set up your dev environment for extending Teams apps across Microsoft 365](https://aka.ms/teamsfx-m365-apps-prerequisites)
-> Please note that after you enrolled your developer tenant in Office 365 Target Release, it may take couple days for the enrollment to take effect.
-> - [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [Teams Toolkit CLI](https://aka.ms/teamsfx-cli)
+## Minimal path to awesome
+> Here are the instructions to run the sample in **Visual Studio Code**.
+### Run the app locally
+1. Clone the repo to your local workspace or directly download the source code.
+3. Open the project in Visual Studio Code.
+4. Open Debug View (`Ctrl+Shift+D`) and select `Debug(Edge)` or `Debug(Chrome)` in dropdown list.
+5. Press `F5` finally pop up an window to login your tenant account, and install this Teams App.
 
-1. First, select the Teams Toolkit icon on the left in the VS Code toolbar.
-2. In the Account section, sign in with your [Microsoft 365 account](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts) if you haven't already.
-3. Press F5 to start debugging which launches your app in Teams using a web browser. Select `Debug (Edge)` or `Debug (Chrome)`.
-4. When Teams launches in the browser, select the Add button in the dialog to install your app to Teams.
-5. To trigger the Message Extension, you can:
-   1. In Teams: `@mention` Your message extension from the `search box area`, `@mention` your message extension from the `compose message area` or click the `...` under compose message area to find your message extension.
-   2. In Outlook: click the `More apps` icon under compose email area to find your message extension.
+### Deploy the app to Azure
+Deploy your project to Azure by following these steps:
+1. Open Teams Toolkit in Visual Studio Code, and sign in your Azure account by clicking the `Sign in to Azure` in the `ACCOUNTS` section from sidebar.
+2. Open Teams Toolkit and click `Provision` in the `LIFECYCLE` section. Alternatively open the command palette(Ctrl+Shift+P) and type: `Teams: Provision` command.
+3. Open the Teams Toolkit and click `Deploy` in the `LIFECYCLE` section. Alternatively open the command palette(Ctrl+Shift+P) and type: `Teams: Deploy` command.
+> Note: Provision Azure cloud resources and deploy to Azure may cause charges to your Azure Subscription.
+### Preview the app in Teams
+After you have completed the provision and deploy steps in `Deploy the app to Azure` section, you can preview your app in Teams client by following steps below:
 
-**Congratulations**! You are running an application that can now search npm registries in Teams and Outlook.
+1. Open the `Run and Debug Activity` panel from sidebar, or use short key Ctrl+Shift+D.
+1. Select `Launch Remote (Edge)` or `Launch Remote (Chrome)` in the launch configuration (a dropdown selection in the upper-left corner).
+1. Press the `Start Debugging` button to launch your app, the Teams web client will be automatically opened in your browser, where you will see your app running remotely from Azure.
 
-![Search app demo](https://user-images.githubusercontent.com/11220663/167868361-40ffaaa3-0300-4313-ae22-0f0bab49c329.png)
 
 ## What's included in the template
 
