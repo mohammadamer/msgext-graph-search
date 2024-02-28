@@ -6,6 +6,7 @@ import { CommandIds } from "./enums/CommandIds";
 import { EntityType } from "./enums/EntityType";
 import "isomorphic-fetch";
 import config from "./config";
+import { ActionTypes } from 'botbuilder';
 
 const oboAuthConfig: OnBehalfOfCredentialAuthConfig = {
   authorityHost: config.authorityHost,
@@ -68,7 +69,12 @@ export class SearchApp extends TeamsActivityHandler {
                 const title = this.GetThumbnailCardTitle(item, entityType);
                 const text = this.GetThumbnailCardText(item, entityType);
 
-                const thumbnailCard = CardFactory.thumbnailCard(title, text);
+                //messages and events have a different card format than files and list items, so we need to handle them differently
+                const thumbnailCard = (entityType === EntityType.Message || entityType === EntityType.Event) ? 
+                CardFactory.thumbnailCard(title, text) :
+                CardFactory.thumbnailCard(title, text, undefined,
+                  [{type: ActionTypes.OpenUrl, title: "View Item", value: item.resource.webUrl}]);
+
                 attachments.push(thumbnailCard);
               }
           }
@@ -137,15 +143,5 @@ export class SearchApp extends TeamsActivityHandler {
     } else {
         return "Unknown";
     }
-  }
-
-  public async handleTeamsMessagingExtensionSelectItem(context: TurnContext, obj: any): Promise<any> {
-    return {
-      composeExtension: {
-        type: "result",
-        attachmentLayout: "list",
-        attachments: [CardFactory.heroCard(obj.name, obj.description)],
-      },
-    };
   }
 }
