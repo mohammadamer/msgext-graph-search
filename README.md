@@ -1,7 +1,7 @@
 # msgext-graph-search
 msgext-graph-search has been built using search-based [message extension](https://docs.microsoft.com/microsoftteams/platform/messaging-extensions/what-are-messaging-extensions?tabs=nodejs) template that allows users to leverages the Graph Search API to search Microsoft 365 data and share results through the compose message area of the Microsoft Teams client. You can now build and run the this message extensions in Teams, Outlook for Windows desktop and web experiences.
 
-[![msgext-graph-search app demo]](https://github.com/mohammadamer/msgext-graph-search/blob/main/docs/msgext-graph-search.mp4) 
+https://github.com/mohammadamer/msgext-graph-search/assets/19314043/eb379605-0190-4191-a52e-8a79bb96b721
 
 ## Main functionalities
 - Login and consent in Message Extension
